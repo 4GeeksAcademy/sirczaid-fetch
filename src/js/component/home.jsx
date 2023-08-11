@@ -10,12 +10,13 @@ const Home = () => {
 	const listElements = useRef();
 	const audio = useRef();
 
-	const getSongsData = () => {
+	const getSongsData = async () => {
 		// HACER LA PETICIÓN
-		fetch("http://playground.4geeks.com/apis/fake/sound/songs")
-			.then((res) => res.json()) // CONVERTIR A JSON
-			.then((data) => setSongs(data)) // GUARDAR
-			.catch((error) => console.log(error)); // ATRAPAR error
+		try {
+			setSongs(await (await fetch("http://playground.4geeks.com/apis/fake/sound/songs")).json());
+		} catch(error) {
+			console.log(error)
+		}
 	}
 
 	const handleSelectedSong = (id, url) => {
